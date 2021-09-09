@@ -4,6 +4,7 @@
 #include <memory> 
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/basic_file_sink.h>
+#include "spdlog/sinks/rotating_file_sink.h"
 
 //namespace Pmu
 //{
@@ -19,7 +20,7 @@
         logSinks[0]->set_pattern("%^[%T] %n: %v%$");
 		logSinks[1]->set_pattern("[%T] [%l] %n: %v");
 
-        s_CoreLogger = std::make_shared<spdlog::logger>("Pmu",begin(logSinks),end(LogSinks));
+        s_CoreLogger = std::make_shared<spdlog::logger>("Pmu",begin(logSinks),end(logSinks));
 
         spdlog::register_logger(s_CoreLogger);
         s_CoreLogger->set_level(spdlog::level::trace);

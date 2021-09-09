@@ -1,7 +1,7 @@
 include(ExternalProject)
 cmake_minimum_required(VERSION 3.12)
 
-project(dspc++ CXX)
+project(pmuc CXX)
 
 
 set(CMAKE_CXX_STANDARD 17)
@@ -10,12 +10,12 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O2")
 
-add_executable(${PROJECT_NAME} src/main.cpp)
 
 message(STATUS "PWD: ${CMAKE_CURRENT_SOURCE_DIR}")
 set(STAGING_DIR "${CMAKE_CURRENT_SOURCE_DIR}/build")
 message(STATUS "PWD: ${STAGING_DIR}")
 
+###################### Libraries ###################
 ExternalProject_Add(spdlog
     PREFIX spdlog
     SOURCE_DIR ${PROJECT_SOURCE_DIR}/ext/spdlog
@@ -27,5 +27,22 @@ ExternalProject_Add(spdlog
     -DSPDLOG_BUILD_SHARED=OFF
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC ext/spdlog/include)
-#add_dependecies(${PROJECT_NAME} spdlog)
+set(SRC_FILES
+    src/Log.cpp
+    src/dataBuffer.cpp
+)
+
+add_library(${PROJECT_NAME} ${SRC_FILES})
+
+#################### Executable ##################
+
+target_include_directories(${PROJECT_NAME} 
+    PUBLIC ext/spdlog/include
+    PUBLIC ${STAGING_DIR}/include/
+    )
+
+add_dependencies(${PROJECT_NAME} spdlog)
+
+add_executable(${PROJECT_NAME}_runner src/main.cpp)
+
+target_link_libraries(${PROJECT_NAME}_runner ${PROJECT_NAME})
