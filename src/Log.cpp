@@ -5,9 +5,8 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/basic_file_sink.h>
 #include "spdlog/sinks/rotating_file_sink.h"
-
-//namespace Pmu
-//{
+namespace Pmu
+{
     Ref<spdlog::logger> Log::s_CoreLogger;
 
     void Log::Init()
@@ -27,4 +26,4 @@
         s_CoreLogger->flush_on(spdlog::level::trace);
 
     }
-//}
+}
