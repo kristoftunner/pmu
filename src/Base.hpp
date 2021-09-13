@@ -1,15 +1,18 @@
 #pragma once
 #include <memory>
 
-//namespace Pmu
-//{
+namespace Pmu
+{
     template<typename T>
-    using Ref = std::shared_ptr<T>;   
+    using SPtr = std::shared_ptr<T>;   
     template<typename T, typename ... Args>
-    constexpr Ref<T> CreateRef(Args&& ... args)
+    constexpr SPtr<T> CreateRef(Args&& ... args)
     {
         return std::make_shared<T>(std::forward<Args>(args)...);
     }
-//}
+
+    template<typename T>
+    using SCPtr = std::shared_ptr<T const>;
+}
 
 #include "Log.hpp"

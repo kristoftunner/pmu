@@ -14,17 +14,16 @@ template<size_t S>
         DataBuffer();
         ~DataBuffer();
 
-        void ReadBuffer();
-        void GetData();
-        
+        bool CopyBuffer();
+        bool GetData();
+        void SetValue();
         std::vector<int> CopyData();
-        
+
+        std::type_info const& GetType() const;        
 
     private:
-        std::string m_fName = "";
         int* m_Data = nullptr;
         size_t m_Size = 0;
         size_t m_Capacity = 0;
-        std::mutex m_DataMutex;
     };
 }
