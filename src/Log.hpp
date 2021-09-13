@@ -10,11 +10,11 @@ namespace Pmu
     class Log
     {
     private:
-        static Ref<spdlog::logger> s_CoreLogger;
+        static SPtr<spdlog::logger> s_CoreLogger;
     public:
         static void Init();
         
-        static Ref<spdlog::logger>& GetCoreLogger(){return s_CoreLogger;}
+        static SPtr<spdlog::logger>& GetCoreLogger(){return s_CoreLogger;}
         
     };
 }

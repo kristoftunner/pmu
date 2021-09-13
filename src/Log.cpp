@@ -7,7 +7,7 @@
 #include "spdlog/sinks/rotating_file_sink.h"
 namespace Pmu
 {
-    Ref<spdlog::logger> Log::s_CoreLogger;
+    SPtr<spdlog::logger> Log::s_CoreLogger;
 
     void Log::Init()
     {
