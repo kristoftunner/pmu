@@ -29,7 +29,6 @@ ExternalProject_Add(spdlog
 
 set(SRC_FILES
     src/Log.cpp
-    src/dataBuffer.cpp
 )
 
 add_library(${PROJECT_NAME} ${SRC_FILES})

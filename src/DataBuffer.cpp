@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include <memory>
 
 #include "Base.hpp"
 #include "DataBuffer.hpp"
@@ -11,7 +12,8 @@ DataBuffer::DataBuffer()
 {
     m_Size = 0;
     m_Capacity = S;
-    m_Data = new T[m_Capacity];
+    m_Data = new ValueType[m_Capacity];
+    type = typeid(ValueType);
 }
 
 DataBuffer::~DataBuffer()
@@ -19,18 +21,31 @@ DataBuffer::~DataBuffer()
     delete m_Data;
 }
 
-DataBuffer::SetValue()
+bool DataBuffer::MoveBuffer(SPtr<DataBuffer> const& fromBuffer)
 {
-
+    return true;   
 }
 
-DataBuffer::MoveBuffer()
+bool DataBuffer::CopyBuffer(SPtr<DataBuffer> const& fromBuffer)
 {
-
+    if(fromBuffer != nullptr && fromBuffer->m_hasValue &&
+       m_Capacity == fromBuffer->m_Capacity)
+    {
+        memcpy(m_Data, fromBuffer->m_Data, sizeof(fromBuffer->getType())*fromBuffer->m_Capacity); 
+        return true;
+    }
+    return false;
 }
 
-DataBuffer::CopyData()
+std::type_info const& DataBuffer::GetType() const
 {
-
+    if(m_Data != nullptr)
+    {
+        return type;
+    }
+    else
+    {
+        return typeid(void);
+    }
 }
 } //namespace Pmu
