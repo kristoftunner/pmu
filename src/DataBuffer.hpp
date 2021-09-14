@@ -32,8 +32,8 @@ public:
     bool CopyBuffer(SPtr<DataBuffer> const& fromBuffer)
     {
         if(fromBuffer != nullptr && fromBuffer->m_hasValue &&
-            m_Capacity == fromBuffer->m_Capacity &&
-            fromBuffer->GetType == type)
+            m_Capacity == fromBuffer->m_Capacity)
+            //fromBuffer->GetType == type)
         {
             memcpy(m_Data, fromBuffer->m_Data, sizeof(fromBuffer->m_Data[0])*fromBuffer->m_Capacity); 
             return true;
