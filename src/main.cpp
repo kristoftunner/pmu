@@ -2,6 +2,7 @@
 #include "DataBuffer.hpp"
 #include "Base.hpp"
 
+#include <gtest/gtest.h>
 struct chData
 {
     unsigned int ch0,ch1,ch2;
@@ -14,8 +15,9 @@ int main()
     PMU_CORE_WARN("Initialized Log");
     PMU_CORE_INFO("Hello");
 
-    Pmu::DataBuffer<chData,100> newBuff;
-    Pmu::SPtr<Pmu::DataBuffer<chData,100>> newBuff2;
+    Pmu::DataBuffer<chData,100> newBuff1;
+    Pmu::SPtr<Pmu::DataBuffer<chData,100>> newBuff2 = std::make_shared<Pmu::DataBuffer<chData,100>>();
+    
     struct chData a[100];
     for(int i = 0; i < 100; i++)
     {
@@ -32,22 +34,22 @@ int main()
         b[i].ch2 = i*2;
     }
 
-    newBuff.SetBuffer(a);
+    newBuff1.SetBuffer(a);
     newBuff2->SetBuffer(b);
     for(int i = 0; i < 100; i++)
     {
-        struct chData temp = *newBuff.GetValue(i);
+        struct chData temp = *newBuff1.GetValue(i);
         std::cout << i << ":" << temp.ch0 << ":" << temp.ch1 << ":" << temp.ch2 << "\n";
     }
 
-    newBuff.CopyBuffer(newBuff2);
+    newBuff1.CopyBuffer(newBuff2);
+    std::cout << "-----------------------------\n";
+    std::cout << "newBuff1 values:\n";
     for(int i = 0; i < 100; i++)
     {
-        struct chData temp = *newBuff.GetValue(i);
+        struct chData temp = *newBuff1.GetValue(i);
         std::cout << i << ":" << temp.ch0 << ":" << temp.ch1 << ":" << temp.ch2 << "\n";
     }
-
-
 }
 
 

@@ -33,11 +33,13 @@ set(SRC_FILES
 
 add_library(${PROJECT_NAME} ${SRC_FILES})
 
-#################### Executable ##################
+add_subdirectory(ext/gtest)
 
+#################### Executable ##################
 target_include_directories(${PROJECT_NAME} 
     PUBLIC ext/spdlog/include
     PUBLIC ${STAGING_DIR}/include/
+    PUBLIC ext/gtest/googletest/include
     )
 
 add_dependencies(${PROJECT_NAME} spdlog)
@@ -45,3 +47,22 @@ add_dependencies(${PROJECT_NAME} spdlog)
 add_executable(${PROJECT_NAME}_runner src/main.cpp)
 
 target_link_libraries(${PROJECT_NAME}_runner ${PROJECT_NAME})
+
+#################### Test files ##################
+set(TEST_FILES
+    test/BufferTest.cpp
+)
+
+add_executable(${PROJECT_NAME}_test ${TEST_FILES})
+target_include_directories(${PROJECT_NAME}_test 
+    PUBLIC ext/gtest/googletest/include
+)
+target_link_libraries(${PROJECT_NAME}_test 
+    ${PROJECT_NAME}
+    gtest_main
+)
+
+#add_test(
+#    NAME ${PROJECT_NAME}
+#    COMMAND ${PROJECT_NAME}
+#)
