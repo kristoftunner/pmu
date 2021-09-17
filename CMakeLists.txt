@@ -56,6 +56,7 @@ set(TEST_FILES
 add_executable(${PROJECT_NAME}_test ${TEST_FILES})
 target_include_directories(${PROJECT_NAME}_test 
     PUBLIC ext/gtest/googletest/include
+    PUBLIC src
 )
 target_link_libraries(${PROJECT_NAME}_test 
     ${PROJECT_NAME}

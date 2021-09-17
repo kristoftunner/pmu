@@ -46,16 +46,16 @@ public:
         return true;
     }
 
-    void SetValue(ValueType const& value, size_t index)
+    bool SetValue(ValueType const& value, size_t index)
     {
-        if(index < m_Size-1)
+        if(index < m_Capacity)
         {
             m_Data[index] = value;
-        }
-        else
-        {
             m_hasValue = true;
+            return true;
         }
+
+        return false;
     }
 
     void SetBuffer(ValueType value[S])
@@ -66,13 +66,18 @@ public:
 
     ValueType* GetValue(size_t index)
     {
-        if(index < m_Size-1 && m_hasValue && 
+        if(index < m_Capacity && m_hasValue && 
             GetType() == typeid(ValueType))
         {
             return &m_Data[index];
         }
         else
             return nullptr;
+    }
+
+    size_t GetSize()
+    {
+        return m_Capacity;
     } 
 
     std::type_info const& GetType() const
