@@ -29,6 +29,7 @@ ExternalProject_Add(spdlog
 
 set(SRC_FILES
     src/Log.cpp
+    src/PruDataManager.cpp
 )
 
 add_library(${PROJECT_NAME} ${SRC_FILES})
@@ -54,16 +55,16 @@ set(TEST_FILES
 )
 
 add_executable(${PROJECT_NAME}_test ${TEST_FILES})
-target_include_directories(${PROJECT_NAME}_test 
-    PUBLIC ext/gtest/googletest/include
-    PUBLIC src
-)
 target_link_libraries(${PROJECT_NAME}_test 
     ${PROJECT_NAME}
     gtest_main
 )
 
-#add_test(
-#    NAME ${PROJECT_NAME}
-#    COMMAND ${PROJECT_NAME}
-#)
+add_executable(${PROJECT_NAME}_prutest test/PruDataManagerTest.cpp)
+
+target_include_directories(${PROJECT_NAME}_prutest 
+    PUBLIC src/
+    PUBLIC ${STAGING_DIR}/include/
+)
+
+target_link_libraries(${PROJECT_NAME}_prutest ${PROJECT_NAME})
