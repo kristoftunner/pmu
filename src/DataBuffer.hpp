@@ -6,10 +6,6 @@
 
 namespace Pmu
 {
-struct chData{
-    unsigned int ch0,ch1,ch2;
-};
-
 template<typename T, size_t S>
 class DataBuffer{
 public:

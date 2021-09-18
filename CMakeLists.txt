@@ -60,6 +60,11 @@ target_link_libraries(${PROJECT_NAME}_test
     gtest_main
 )
 
+target_include_directories(${PROJECT_NAME}_test
+    PUBLIC src/
+    PUBLIC ${STAGING_DIR}/include/
+)
+
 add_executable(${PROJECT_NAME}_prutest test/PruDataManagerTest.cpp)
 
 target_include_directories(${PROJECT_NAME}_prutest 

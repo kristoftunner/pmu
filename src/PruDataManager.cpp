@@ -39,9 +39,9 @@ namespace Pmu
         return true;
     }
 
-    bool PruDataManager::CreateOutputStreams(int numOfBuffers,size_t bufferSize)
+    bool PruDataManager::CreateOutputStreams(int numOfBuffers)
     {
-        SPtr<DataBuffer<chData,bufferSize>> bufferData = std::make_shared<DataBuffer<chData,bufferSize>>();
+        SPtr<DataBuffer<chData,4000>> bufferData = std::make_shared<DataBuffer<chData,4000>>();
         outputStreams.push_back(bufferData);
         return true;
     }
@@ -51,7 +51,7 @@ namespace Pmu
         
     }
 
-    bool Tick()
+    void PruDataManager::Tick()
     {
         // read data to buffer
         /*std::ifstream input(inputFileName, std::ios::binary);
@@ -72,7 +72,6 @@ namespace Pmu
             data[i].ch2 = i;
         }
         outputStreams[0]->SetBuffer(data);
-
-        return true;
+        std::cout << "Hello\n";
     }
 } // namespace Pru

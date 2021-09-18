@@ -18,11 +18,11 @@ public:
     ~PruDataManager();
 
     bool AddInputStream(SPtr<DataBuffer<chData,4000>> fromBuffer);
-    bool CreateOutputStreams(int numOfBuffers,size_t bufferSize);
+    bool CreateOutputStreams(int numOfBuffers);
     void SetOutputStreamCount(int count);
     int GetInputStreamCount();
     int GetOutputStreamCount();
-    bool Tick();
+    void Tick();
     void ReadFile();
 
 private:
