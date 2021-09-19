@@ -7,8 +7,5 @@ int main()
 
     mg.CreateOutputStreams(1);
 
-    std::thread(mg.Tick());
-
-
 
 }

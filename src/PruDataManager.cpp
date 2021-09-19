@@ -2,7 +2,9 @@
 #include "PruDataManager.hpp"
 
 #include <vector>
-
+#include <mutex>
+#include <thread>
+#include <condition_variable>
 
 namespace Pmu
 {
@@ -63,15 +65,24 @@ namespace Pmu
         struct chData data[bufferSize];
         input.read((char *)&data[0], length);
         input.close();*/
-
-        struct chData data[4000];
-        for(int i = 0; i < 4000; i++)
+        while(true)
         {
-            data[i].ch0 = i;
-            data[i].ch1 = i;
-            data[i].ch2 = i;
+            std::unique_lock<mutex> lock(_dataBuffMutex);
+            _dataReady.wait(lock,);
+            struct chData data[4000];
+            for(int i = 0; i < 4000; i++)
+            {
+                data[i].ch0 = i;
+                data[i].ch1 = i;
+                data[i].ch2 = i;
+            }
+            outputStreams[0]->SetBuffer(data);
+            std::cout << "Hello\n";
         }
-        outputStreams[0]->SetBuffer(data);
-        std::cout << "Hello\n";
+    }
+
+    void PruDataManager::_Run()
+    {
+        _thread = std::thread(&PruDataManager::Tick(), this);
     }
 } // namespace Pru

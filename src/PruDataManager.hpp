@@ -1,5 +1,8 @@
 #include <vector>
 #include <string>
+#include <thread>
+#include <condition_variable>
+#include <mutex>
 
 #include "Base.hpp"
 #include "DataBuffer.hpp"
@@ -23,12 +26,16 @@ public:
     int GetInputStreamCount();
     int GetOutputStreamCount();
     void Tick();
+    void _Run();
     void ReadFile();
 
 private:
 
     std::vector<SPtr<Pmu::DataBuffer<chData,4000>>> inputStreams;
     std::vector<SPtr<Pmu::DataBuffer<chData,4000>>> outputStreams;
+    std::thread _thread;
+    std::condition_variable _dataReady;
+    std::mutex _dataBuffMutex;
 
     std::string inputFileName;
     int inputStreamCount;
