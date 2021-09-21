@@ -67,8 +67,8 @@ namespace Pmu
         input.close();*/
         while(true)
         {
-            std::unique_lock<mutex> lock(_dataBuffMutex);
-            _dataReady.wait(lock,);
+            std::unique_lock<std::mutex> lock(_dataBuffMutex);
+            
             struct chData data[4000];
             for(int i = 0; i < 4000; i++)
             {
@@ -78,11 +78,12 @@ namespace Pmu
             }
             outputStreams[0]->SetBuffer(data);
             std::cout << "Hello\n";
+            _dataReady.notify_all();
         }
     }
 
     void PruDataManager::_Run()
     {
-        _thread = std::thread(&PruDataManager::Tick(), this);
+        _thread = std::thread( &PruDataManager::Tick, this );
     }
 } // namespace Pru
