@@ -25,10 +25,11 @@ public:
     void SetOutputStreamCount(int count);
     int GetInputStreamCount();
     int GetOutputStreamCount();
-    void Tick();
     void Run();
+    void Stop();
     void ReadFile();
-
+private:
+    void Tick();
 private:
 
     std::vector<SPtr<Pmu::DataBuffer<chData,4000>>> inputStreams;

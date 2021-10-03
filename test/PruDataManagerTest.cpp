@@ -6,7 +6,8 @@ int main()
     Pmu::PruDataManager mg;
 
     
-    mg.CreateOutputStreams(1);
+    //mg.CreateOutputStreams(1);
 
     mg.Run();
+    mg.Stop();
 }

@@ -16,7 +16,6 @@ namespace Pmu
 
     PruDataManager::~PruDataManager()
     {
-
     }
 
     void PruDataManager::SetOutputStreamCount(int count)
@@ -52,7 +51,17 @@ namespace Pmu
     {
         
     }
+    
+    void PruDataManager::Run()
+    {
+        _thread = std::thread( &PruDataManager::Tick, this );
+    }
 
+    void PruDataManager::Stop()
+    {
+        if(_thread.joinable())
+            _thread.join();
+    }
     void PruDataManager::Tick()
     {
         // read data to buffer
@@ -65,8 +74,9 @@ namespace Pmu
         struct chData data[bufferSize];
         input.read((char *)&data[0], length);
         input.close();*/
-        PMU_CORE_INFO("Ticking");
-        while(true)
+        //Pru::PMU_CORE_INFO("Ticking");
+        std::cout << "Tick\n";
+        /*while(true)
         {
             std::unique_lock<std::mutex> lock(_dataBuffMutex);
             
@@ -79,11 +89,7 @@ namespace Pmu
             }
             outputStreams[0]->SetBuffer(data);
             _dataReady.notify_all();
-        }
+        }*/
     }
 
-    void PruDataManager::Run()
-    {
-        _thread = std::thread( &PruDataManager::Tick, this );
-    }
 } // namespace Pru
