@@ -26,7 +26,7 @@ public:
     int GetInputStreamCount();
     int GetOutputStreamCount();
     void Tick();
-    void _Run();
+    void Run();
     void ReadFile();
 
 private:

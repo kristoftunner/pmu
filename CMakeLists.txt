@@ -6,7 +6,7 @@ project(pmuc CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -pthread")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O2")
 
@@ -65,11 +65,11 @@ target_include_directories(${PROJECT_NAME}_test
     PUBLIC ${STAGING_DIR}/include/
 )
 
-#add_executable(${PROJECT_NAME}_prutest test/PruDataManagerTest.cpp)
-#
-#target_include_directories(${PROJECT_NAME}_prutest 
-#    PUBLIC src/
-#    PUBLIC ${STAGING_DIR}/include/
-#)
-#
-#target_link_libraries(${PROJECT_NAME}_prutest ${PROJECT_NAME})
+add_executable(${PROJECT_NAME}_prutest test/PruDataManagerTest.cpp)
+
+target_include_directories(${PROJECT_NAME}_prutest 
+    PUBLIC src/
+    PUBLIC ${STAGING_DIR}/include/
+)
+
+target_link_libraries(${PROJECT_NAME}_prutest ${PROJECT_NAME})

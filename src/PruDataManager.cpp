@@ -65,6 +65,7 @@ namespace Pmu
         struct chData data[bufferSize];
         input.read((char *)&data[0], length);
         input.close();*/
+        PMU_CORE_INFO("Ticking");
         while(true)
         {
             std::unique_lock<std::mutex> lock(_dataBuffMutex);
@@ -77,12 +78,11 @@ namespace Pmu
                 data[i].ch2 = i;
             }
             outputStreams[0]->SetBuffer(data);
-            std::cout << "Hello\n";
             _dataReady.notify_all();
         }
     }
 
-    void PruDataManager::_Run()
+    void PruDataManager::Run()
     {
         _thread = std::thread( &PruDataManager::Tick, this );
     }
