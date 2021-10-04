@@ -3,11 +3,12 @@
 
 int main()
 {
-    Pmu::PruDataManager mg;
-
+    Pmu::PruDataManager signalGen;
     
-    //mg.CreateOutputStreams(1);
+    Pmu::Log::Init();
+    
+    signalGen.CreateOutputStreams(1);
 
-    mg.Run();
-    mg.Stop();
+    signalGen.Run();
+    signalGen.Stop();
 }

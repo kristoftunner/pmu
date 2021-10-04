@@ -1,6 +1,6 @@
 #include "Base.hpp"
 #include "PruDataManager.hpp"
-
+#include "Log.hpp"
 #include <vector>
 #include <mutex>
 #include <thread>
@@ -74,10 +74,11 @@ namespace Pmu
         struct chData data[bufferSize];
         input.read((char *)&data[0], length);
         input.close();*/
-        //Pru::PMU_CORE_INFO("Ticking");
-        std::cout << "Tick\n";
-        /*while(true)
+        PMU_CORE_INFO("Ticking");
+        while(true)
         {
+            using namespace std::chrono_literals;
+            std::this_thread::sleep_for(1s);
             std::unique_lock<std::mutex> lock(_dataBuffMutex);
             
             struct chData data[4000];
@@ -87,9 +88,10 @@ namespace Pmu
                 data[i].ch1 = i;
                 data[i].ch2 = i;
             }
+            PMU_CORE_INFO("Setting buffer");
             outputStreams[0]->SetBuffer(data);
             _dataReady.notify_all();
-        }*/
+        }
     }
 
 } // namespace Pru
